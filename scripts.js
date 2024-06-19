@@ -1,29 +1,26 @@
-const express = require('express');
-const app = express();
-const port = 3000;
+<!DOCTYPE html>
+<html>
+<body>
 
-// আপনার API কী
-const apiKey = 'AIzaSyB4X2HbcaBxnP8WdL7dlMVnFYM3Smyl7es';
+<h2>API উত্তর</h2>
 
-// মিডলওয়্যার ফাংশন যা প্রতিটি অনুরোধের সাথে আপনার API কী চেক করে
-const checkApiKey = (req, res, next) => {
-  const userKey = req.query.api_key;
-  if (userKey && userKey === apiKey) {
-    next();
-  } else {
-    res.status(403).send('Unauthorized');
-  }
-};
+<p id="demo"></p>
 
-app.use(checkApiKey);
+<script>
+// আপনার API URL
+var apiUrl = 'http://localhost:3000/api/your_prompt?api_key=AIzaSyB4X2HbcaBxnP8WdL7dlMVnFYM3Smyl7es';
 
-app.get('/api/:prompt', (req, res) => {
-  const prompt = req.params.prompt;
-  // এখানে আপনার লজিক যোগ করুন
-  const response = `Your prompt was ${prompt}`;
-  res.send(response);
-});
+// API কল করা
+fetch(apiUrl)
+  .then(response => response.text())
+  .then(data => {
+    // উত্তরটি ওয়েবসাইটে প্রদর্শন করা
+    document.getElementById("demo").innerHTML = data;
+  })
+  .catch((error) => {
+    console.error('Error:', error);
+  });
+</script>
 
-app.listen(port, () => {
-  console.log(`Server is running at http://localhost:${port}`);
-});
+</body>
+</html>
